@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Enterprise Recruitment & Outreach Automation System - LinkedIn Scraping, Truthful Resume Customization, Gmail SMTP Outreach, and IMAP Reply Sync" />
+  <title>Recruitment & Outreach Automation System | Enterprise Console</title>
+
+  <!-- Typography: Inter, Outfit, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/views.css" />
+</head>
+<body>
+  <div id="app-container">
+    <!-- Top Header -->
+    <header id="top-header">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        </div>
+        <div class="brand-text">
+          <h1>
+            Recruitment Automation
+            <span class="brand-version">v1.0 Pro</span>
+          </h1>
+        </div>
+      </div>
+
+      <div class="header-center-info">
+        <div class="candidate-selector-wrapper">
+          <label for="header-candidate-select">Active Candidate:</label>
+          <select id="header-candidate-select" class="candidate-select">
+            <option value="">Loading profiles...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Operating Mode Toggle -->
+        <div id="header-mode-pill" class="mode-pill test-mode" title="Click to toggle between Safe Test Mode and Live Production Outreach">
+          <span class="pulse-dot"></span> TEST MODE (Safe)
+        </div>
+
+        <button id="header-quick-batch-btn" class="btn btn-primary btn-sm">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Run Batch Pipeline
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div id="main-workspace">
+      <!-- Navigation Sidebar -->
+      <nav id="sidebar">
+        <div class="nav-item active" data-tab="dashboard" id="nav-dashboard">
+          <span class="nav-icon">🚀</span>
+          <span>Dashboard</span>
+        </div>
+
+        <div class="nav-item" data-tab="candidates" id="nav-candidates">
+          <span class="nav-icon">👤</span>
+          <span>Candidates</span>
+        </div>
+
+        <div class="nav-item" data-tab="scraper" id="nav-scraper">
+          <span class="nav-icon">🔍</span>
+          <span>LinkedIn Scraper</span>
+        </div>
+
+        <div class="nav-item" data-tab="tailoring" id="nav-tailoring">
+          <span class="nav-icon">📝</span>
+          <span>Resume Tailoring</span>
+        </div>
+
+        <div class="nav-item" data-tab="outreach" id="nav-outreach">
+          <span class="nav-icon">✉️</span>
+          <span>Gmail Outreach</span>
+        </div>
+
+        <div class="nav-item" data-tab="followups" id="nav-followups">
+          <span class="nav-icon">🔄</span>
+          <span>IMAP & Follow-ups</span>
+        </div>
+
+        <div class="nav-item" data-tab="analytics" id="nav-analytics">
+          <span class="nav-icon">📊</span>
+          <span>Campaign Analytics</span>
+        </div>
+
+        <div class="nav-item" data-tab="settings" id="nav-settings">
+          <span class="nav-icon">⚙️</span>
+          <span>System Settings</span>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+
+        <div class="sidebar-system-summary">
+          <div class="status-line">
+            <span>Primary LLM</span>
+            <span style="color:var(--cyan-primary); font-weight:600;">Gemini 3.8</span>
+          </div>
+          <div class="status-line">
+            <span>Fallback 1</span>
+            <span style="color:var(--text-main);">Groq 70B</span>
+          </div>
+          <div class="status-line">
+            <span>Word COM Lock</span>
+            <span style="color:var(--color-success); font-weight:600;">ACTIVE</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Viewport Content Container -->
+      <main id="content-viewport" role="main">
+        <!-- Rendered view component mounts here -->
+      </main>
+    </div>
+
+    <!-- Bottom Activity / Terminal Logs Drawer -->
+    <section id="activity-drawer" class="collapsed" aria-label="System Terminal Drawer">
+      <div class="drawer-header" id="drawer-toggle-btn">
+        <div class="drawer-title">
+          <span class="pulse-dot" style="background:#38bdf8;"></span>
+          <span>System Terminal & Background Job Stream</span>
+        </div>
+        <div class="drawer-controls">
+          <button id="drawer-clear-btn" class="btn btn-secondary btn-sm" style="padding:2px 8px; font-size:10px;">Clear</button>
+          <span id="drawer-toggle-icon" style="font-size:10px; cursor:pointer;">▲</span>
+        </div>
+      </div>
+      <div id="terminal-log-output" class="terminal-logs">Listening for application events...</div>
+    </section>
+
+    <!-- Safety Confirmation Barrier Modal -->
+    <div id="safety-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="safety-modal-title">
+      <div class="modal-content danger-barrier">
+        <div class="safety-barrier-header">
+          <div class="safety-barrier-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <div>
+            <h3 id="safety-modal-title" style="font-family:var(--font-display); font-size:17px; font-weight:700; color:#ef4444;">
+              LIVE PRODUCTION OUTREACH PROTECTION
+            </h3>
+            <span style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px;">Security Confirmation Required</span>
+          </div>
+        </div>
+
+        <div id="safety-modal-desc" class="safety-barrier-body">
+          You are about to dispatch real emails to recruiters.
+        </div>
+
+        <div class="safety-input-wrapper">
+          <label for="safety-token-input">Type <code>SEND</code> below to authorize:</label>
+          <input type="text" id="safety-token-input" class="safety-token-input" placeholder="SEND" autocomplete="off" />
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px;">
+          <button id="safety-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button id="safety-confirm-btn" class="btn btn-danger" disabled>Confirm & Dispatch Real Emails</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Toast Notification Anchor -->
+    <div id="toast-container" aria-live="polite"></div>
+  </div>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
